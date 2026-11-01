@@ -1,0 +1,7 @@
+Contact: mailto:security@dewaai.com
+Preferred-Languages: en
+Canonical: https://dewa-ai-studio.netlify.app/
+Policy: https://dewa-ai-studio.netlify.app/
+Hiring: https://dewa-ai-studio.netlify.app/
+Encryption: https
+Acknowledgments: https://dewa-ai-studio.netlify.app/
