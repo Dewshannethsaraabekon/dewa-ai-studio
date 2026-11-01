@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dewa AI Studio</title>
+  <style>
+    :root {
+      --bg: #07111f;
+      --bg-soft: #0c1a2d;
+      --card: #102238;
+      --card-2: #122843;
+      --primary: #7c9cff;
+      --secondary: #6ee7d8;
+      --accent: #f793d4;
+      --text: #edf5ff;
+      --muted: #a9bbd6;
+      --success: #63e6be;
+      --warning: #ffc857;
+      --border: rgba(255,255,255,0.08);
+      --shadow: 0 20px 50px rgba(0,0,0,0.35);
+    }
+
+    * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: linear-gradient(180deg, var(--bg) 0%, #0b1424 100%);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    a { text-decoration: none; color: inherit; }
+
+    .container {
+      width: min(1180px, calc(100% - 40px));
+      margin: 0 auto;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      background: rgba(7, 17, 31, 0.8);
+      backdrop-filter: blur(18px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav {
+      height: 74px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 1.2rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+    }
+
+    .brand-badge {
+      width: 38px;
+      height: 38px;
+      border-radius: 12px;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: #05121d;
+      font-weight: 800;
+      box-shadow: var(--shadow);
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+      gap: 26px;
+      color: var(--muted);
+      font-size: 0.96rem;
+    }
+
+    nav a:hover { color: var(--text); }
+
+    .nav-cta {
+      padding: 12px 18px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, var(--primary), #9d8cff);
+      color: white;
+      font-weight: 700;
+      box-shadow: var(--shadow);
+    }
+
+    .hero {
+      padding: 80px 0 60px;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 46px;
+      align-items: center;
+    }
+
+    .eyebrow {
+      display: inline-block;
+      background: rgba(124, 156, 255, 0.12);
+      border: 1px solid rgba(124, 156, 255, 0.25);
+      color: var(--secondary);
+      padding: 8px 14px;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+      font-weight: 700;
+    }
+
+    h1 {
+      font-size: clamp(2.8rem, 5vw, 5rem);
+      line-height: 1.04;
+      margin: 0 0 18px;
+      letter-spacing: -0.06em;
+    }
+
+    .hero p {
+      font-size: 1.1rem;
+      color: var(--muted);
+      max-width: 640px;
+      margin-bottom: 28px;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin-bottom: 28px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px 22px;
+      border-radius: 14px;
+      font-weight: 700;
+      transition: 0.2s ease;
+      border: 1px solid transparent;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: #041320;
+      box-shadow: var(--shadow);
+    }
+
+    .btn-secondary {
+      background: transparent;
+      border-color: var(--border);
+      color: var(--text);
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      filter: brightness(1.05);
+    }
+
+    .stats {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 28px;
+      margin-top: 22px;
+    }
+
+    .stat strong {
+      display: block;
+      font-size: 1.7rem;
+      line-height: 1.1;
+    }
+
+    .stat span {
+      color: var(--muted);
+      font-size: 0.96rem;
+    }
+
+    .hero-panel {
+      background: linear-gradient(180deg, rgba(16,34,56,0.9), rgba(11,20,34,0.92));
+      border: 1px solid var(--border);
+      border-radius: 28px;
+      padding: 18px;
+      box-shadow: var(--shadow);
+    }
+
+    .mini-window {
+      background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 22px;
+      padding: 18px;
+    }
+
+    .mini-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 18px;
+      color: var(--muted);
+      font-size: 0.83rem;
+    }
+
+    .dots {
+      display: flex;
+      gap: 8px;
+    }
+
+    .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      display: inline-block;
+    }
+
+    .dot.red { background: #ff5f57; }
+    .dot.yellow { background: #ffbd2f; }
+    .dot.green { background: #28c840; }
+
+    .tool-box {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .tool-card {
+      background: rgba(255,255,255,0.02);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 18px;
+      padding: 16px;
+      min-height: 122px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .tool-card .icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      display: grid;
+      place-items: center;
+      font-size: 1.2rem;
+      background: linear-gradient(135deg, rgba(124,156,255,0.22), rgba(110,231,216,0.18));
+      border: 1px solid rgba(124,156,255,0.25);
+    }
+
+    .tool-card h4 {
+      margin: 0 0 8px;
+      font-size: 1rem;
+    }
+
+    .tool-card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.86rem;
+    }
+
+    .section {
+      padding: 90px 0;
+    }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+      gap: 20px;
+      margin-bottom: 26px;
+    }
+
+    .section-header h2 {
+      margin: 0;
+      font-size: clamp(2rem, 4vw, 3rem);
+      letter-spacing: -0.05em;
+    }
+
+    .section-header p {
+      margin: 0;
+      color: var(--muted);
+      max-width: 540px;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0,1fr));
+      gap: 22px;
+    }
+
+    .card {
+      background: linear-gradient(180deg, rgba(16,34,56,0.9), rgba(11,20,34,0.92));
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      padding: 22px;
+      box-shadow: var(--shadow);
+    }
+
+    .card .tag {
+      display: inline-flex;
+      padding: 7px 10px;
+      border-radius: 999px;
+      background: rgba(110,231,216,0.1);
+      border: 1px solid rgba(110,231,216,0.2);
+      color: var(--secondary);
+      font-size: 0.76rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      margin-bottom: 18px;
+    }
+
+    .card h3 {
+      margin: 0 0 10px;
+      font-size: 1.4rem;
+    }
+
+    .card p {
+      margin: 0 0 18px;
+      color: var(--muted);
+    }
+
+    .card ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: grid;
+      gap: 10px;
+      color: var(--text);
+    }
+
+    .card li::before {
+      content: "✓";
+      color: var(--success);
+      margin-right: 10px;
+      font-weight: 700;
+    }
+
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 18px;
+      margin-top: 8px;
+    }
+
+    .feature {
+      background: rgba(255,255,255,0.02);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 20px;
+    }
+
+    .feature .icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, rgba(247,147,212,0.22), rgba(124,156,255,0.22));
+      display: grid;
+      place-items: center;
+      margin-bottom: 16px;
+      font-size: 1.2rem;
+    }
+
+    .feature h4 {
+      margin: 0 0 8px;
+      font-size: 1.08rem;
+    }
+
+    .feature p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.96rem;
+    }
+
+    .cta-panel {
+      background: linear-gradient(135deg, rgba(124,156,255,0.14), rgba(110,231,216,0.14));
+      border: 1px solid var(--border);
+      border-radius: 26px;
+      padding: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      box-shadow: var(--shadow);
+    }
+
+    .cta-panel h3 {
+      margin: 0 0 8px;
+      font-size: clamp(1.8rem, 3vw, 2.8rem);
+      letter-spacing: -0.05em;
+    }
+
+    .cta-panel p {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 30px 0 50px;
+      color: var(--muted);
+    }
+
+    .footer-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    @media (max-width: 960px) {
+      .hero-grid,
+      .cards,
+      .feature-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .section-header {
+        display: block;
+      }
+
+      .section-header p {
+        margin-top: 12px;
+      }
+
+      .cta-panel {
+        display: block;
+      }
+
+      nav {
+        display: none;
+      }
+
+      .hero {
+        padding-top: 55px;
+      }
+    }
+
+    @media (max-width: 560px) {
+      .hero-actions {
+        display: grid;
+      }
+
+      .btn {
+        width: 100%;
+      }
+
+      .tool-box {
+        grid-template-columns: 1fr;
+      }
+
+      h1 {
+        font-size: 2.7rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container nav">
+      <div class="brand">
+        <div class="brand-badge">D</div>
+        <span>Dewa AI Studio</span>
+      </div>
+
+      <nav>
+        <a href="#tools">Tools</a>
+        <a href="#features">Features</a>
+        <a href="#pricing">Pricing</a>
+        <a href="#contact">Contact</a>
+      </nav>
+
+      <a class="nav-cta" href="#contact">Get Started</a>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container hero-grid">
+        <div>
+          <div class="eyebrow">AI creative platform</div>
+          <h1>Build, edit, and convert smarter with Dewa AI Studio.</h1>
+          <p>
+            Turn ideas into polished media with AI-powered conversion, image enhancement,
+            background removal, and content tools designed for creators, brands, and businesses.
+          </p>
+
+          <div class="hero-actions">
+            <a href="#tools" class="btn btn-primary">Explore tools</a>
+            <a href="#pricing" class="btn btn-secondary">View pricing</a>
+          </div>
+
+          <div class="stats">
+            <div class="stat">
+              <strong>5K+</strong>
+              <span>Projects created</span>
+            </div>
+            <div class="stat">
+              <strong>98%</strong>
+              <span>User satisfaction</span>
+            </div>
+            <div class="stat">
+              <strong>24/7</strong>
+              <span>Creative support</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-panel">
+          <div class="mini-window">
+            <div class="mini-header">
+              <div class="dots">
+                <span class="dot red"></span>
+                <span class="dot yellow"></span>
+                <span class="dot green"></span>
+              </div>
+              <span>studio.dashboard</span>
+            </div>
+
+            <div class="tool-box">
+              <div class="tool-card">
+                <div class="icon">✦</div>
+                <div>
+                  <h4>Background Remove</h4>
+                  <p>AI cutout with clean edges.</p>
+                </div>
+              </div>
+
+              <div class="tool-card">
+                <div class="icon">⇄</div>
+                <div>
+                  <h4>Format Convert</h4>
+                  <p>Any file to your target format.</p>
+                </div>
+              </div>
+
+              <div class="tool-card">
+                <div class="icon">♫</div>
+                <div>
+                  <h4>MP3 / WAV</h4>
+                  <p>Audio conversion and export.</p>
+                </div>
+              </div>
+
+              <div class="tool-card">
+                <div class="icon">◉</div>
+                <div>
+                  <h4>Smart Resize</h4>
+                  <p>Optimize media for any platform.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="tools">
+      <div class="container">
+        <div class="section-header">
+          <h2>Everything you need to create.</h2>
+          <p>
+            From media conversion to AI enhancement, Dewa AI Studio gives creators a fast, powerful workflow.
+          </p>
+        </div>
+
+        <div class="cards">
+          <div class="card">
+            <div class="tag">Convert</div>
+            <h3>Format Converter</h3>
+            <p>Convert documents, media, images, and audio into clean, export-ready formats.</p>
+            <ul>
+              <li>PDF / DOCX / TXT</li>
+              <li>PNG / JPG / WEBP</li>
+              <li>MP3 / WAV / MP4</li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <div class="tag">AI</div>
+            <h3>Background Remover</h3>
+            <p>Remove image backgrounds instantly and keep your subject crisp and clean.</p>
+            <ul>
+              <li>Transparent PNG output</li>
+              <li>Soft edge cleanup</li>
+              <li>Product and portrait ready</li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <div class="tag">Media</div>
+            <h3>Media Toolkit</h3>
+            <p>Process audio, video, and creative assets in a single workspace.</p>
+            <ul>
+              <li>Download media links</li>
+              <li>Video to MP4</li>
+              <li>Audio extraction and export</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="features">
+      <div class="container">
+        <div class="section-header">
+          <h2>Designed for speed and creativity.</h2>
+          <p>
+            Built for creators who want a cleaner, smarter, and faster workflow without extra complexity.
+          </p>
+        </div>
+
+        <div class="feature-grid">
+          <div class="feature">
+            <div class="icon">⚡</div>
+            <h4>Fast workflows</h4>
+            <p>Process files in seconds with streamlined automation.</p>
+          </div>
+
+          <div class="feature">
+            <div class="icon">🧠</div>
+            <h4>AI-first tools</h4>
+            <p>Use smart background removal, cleaning, and enhancement features.</p>
+          </div>
+
+          <div class="feature">
+            <div class="icon">🔒</div>
+            <h4>Private and safe</h4>
+            <p>Keep your work secure with trusted processing and export flow.</p>
+          </div>
+
+          <div class="feature">
+            <div class="icon">📦</div>
+            <h4>All-in-one hub</h4>
+            <p>One place for media conversion, editing, and export tasks.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="pricing">
+      <div class="container">
+        <div class="section-header">
+          <h2>Simple pricing for creative work.</h2>
+          <p>
+            Choose a plan that matches your throughput and production needs.
+          </p>
+        </div>
+
+        <div class="cards">
+          <div class="card">
+            <div class="tag">Starter</div>
+            <h3>$19/mo</h3>
+            <p>For creators starting out and testing AI workflows.</p>
+            <ul>
+              <li>5,000 AI credits</li>
+              <li>Basic conversion tools</li>
+              <li>1 project workspace</li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <div class="tag">Pro</div>
+            <h3>$49/mo</h3>
+            <p>Best for creators and agencies that need more output.</p>
+            <ul>
+              <li>25,000 AI credits</li>
+              <li>Priority processing</li>
+              <li>Unlimited exports</li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <div class="tag">Business</div>
+            <h3>$99/mo</h3>
+            <p>For teams building a media production pipeline.</p>
+            <ul>
+              <li>Unlimited team usage</li>
+              <li>Advanced AI tools</li>
+              <li>Dedicated support</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="contact">
+      <div class="container">
+        <div class="cta-panel">
+          <div>
+            <h3>Ready to build smarter content?</h3>
+            <p>Launch faster with AI-powered media tools built for modern creators.</p>
+          </div>
+
+          <a href="mailto:hello@dewaai.com" class="btn btn-primary">Contact us</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container footer-row">
+      <div class="brand">
+        <div class="brand-badge">D</div>
+        <span>Dewa AI Studio</span>
+      </div>
+      <div>© 2026 Dewa AI Studio. All rights reserved.</div>
+    </div>
+  </footer>
+</body>
+</html>

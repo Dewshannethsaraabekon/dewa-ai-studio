@@ -1,2 +1,3 @@
-# dewa-ai-studio
-Dewa AI Studio landing page and media tools website
+# Dewa AI Studio
+
+This repository contains the landing page for Dewa AI Studio.
